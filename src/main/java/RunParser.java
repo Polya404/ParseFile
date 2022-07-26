@@ -51,8 +51,13 @@ public class RunParser {
 
     private static String asYaml(String jsonString) throws JsonProcessingException, InterruptedException {
         long start = System.currentTimeMillis();
-        JsonNode jsonNodeTree = new ObjectMapper().readTree(jsonString);
-        String res = new ObjectMapper().writeValueAsString(jsonNodeTree);
+        String res;
+        try {
+            JsonNode jsonNodeTree = new ObjectMapper().readTree(jsonString);
+            res = new ObjectMapper().writeValueAsString(jsonNodeTree);
+        } catch (Exception e) {
+            return "File can not be converted";
+        }
         Thread.sleep(1000);
         long finish = System.currentTimeMillis();
         resAsYaml = finish - start;
@@ -62,8 +67,14 @@ public class RunParser {
     private static String asJson(String yaml) throws InterruptedException {
         long start = System.currentTimeMillis();
         Yaml yaml1 = new Yaml();
-        Map<String, Object> map = yaml1.load(yaml);
-        JSONObject jsonObject = new JSONObject(map);
+        JSONObject jsonObject;
+        try {
+            Map<String, Object> map = yaml1.load(yaml);
+            jsonObject = new JSONObject(map);
+        } catch (Exception e) {
+            return "File can not be converted";
+        }
+
         Thread.sleep(1000);
         long finish = System.currentTimeMillis();
         resAsJson = finish - start;
