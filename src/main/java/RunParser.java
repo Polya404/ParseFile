@@ -33,12 +33,13 @@ public class RunParser {
         if (file.isFile()) {
             if (file.getName().endsWith(".json")) {
                 String json = ReadFromFile.readToString(file.getPath());
-                System.out.println(asYaml(json));
+                //System.out.println(asYaml(json));
                 // записіваем в файл.yaml в папку конвертед
             }
             if (file.getName().endsWith(".yaml")) {
                 String yaml = ReadFromFile.readToString(file.getPath());
                 System.out.println(asJson(yaml));
+                writeToFile(file.getName(), asJson(yaml));
                 // записываем файл.json в папку конвертед
             }
             //System.out.println(file.getName());
@@ -64,25 +65,26 @@ public class RunParser {
     }
 
     // метод записи в файл в папку конвертед
-    public void writeFile() throws IOException {
-        Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
-        String filename = "gameStatistic.log";
-        String s = pathDir.toAbsolutePath().toString();
-        File file = new File(s, File.separator.concat(filename));
-
-        if (file.exists()) {
-            for (String str : info) {
-                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
-            }
-        } else {
-            file.createNewFile();
-            for (String str : info) {
-                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
-            }
-        }
-    }
+//    public void writeFile() throws IOException {
+//        Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
+//        String filename = "gameStatistic.log";
+//        String s = pathDir.toAbsolutePath().toString();
+//        File file = new File(s, File.separator.concat(filename));
+//
+//        if (file.exists()) {
+//            for (String str : info) {
+//                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
+//            }
+//        } else {
+//            file.createNewFile();
+//            for (String str : info) {
+//                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
+//            }
+//        }
+//    }
     private static void writeToFile(String fileName, String s){
-
+        Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
+        System.out.println(pathDir);
     }
 
 }
