@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f8bd451-4642-4f0a-b4e7-c9e678e80cbc" name="Changes" comment="commit">
+      <change afterPath="$PROJECT_DIR$/converted/MOCK_DATA (1).json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/converted/MOCK_DATA (1).yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/converted/MOCK_DATA.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/converted/MOCK_DATA.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/converted/userClass.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/converted/userClass.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/result.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA (1).json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/ParseFile-1.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/RunParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RunParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/phoneBook.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/userClass.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/userClass.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/RunParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/RunParser.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1658822299733</updated>
-      <workItem from="1658822301269" duration="26024000" />
+      <workItem from="1658822301269" duration="37970000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1658848554797</created>
@@ -135,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658855644065</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="commit">
+      <created>1658856543706</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1658856543706</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,5 +175,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit" />
     <option name="LAST_COMMIT_MESSAGE" value="commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/RunParser.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

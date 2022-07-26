@@ -1,14 +1,12 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -34,11 +32,12 @@ public class RunParser {
             if (file.getName().endsWith(".json")) {
                 String json = ReadFromFile.readToString(file.getPath());
                 //System.out.println(asYaml(json));
-                //writeToFile(file.getName(), asYaml(json));
+                writeToFile(file.getName(), asYaml(json));
+                writeLog(file);
             }
             if (file.getName().endsWith(".yaml")) {
                 String yaml = ReadFromFile.readToString(file.getPath());
-                System.out.println(asJson(yaml));
+                //System.out.println(asJson(yaml));
                 writeToFile(file.getName(), asJson(yaml));
                 writeLog(file);
             }
@@ -51,11 +50,24 @@ public class RunParser {
 
     private static String asYaml(String jsonString) throws JsonProcessingException, InterruptedException {
         long start = System.currentTimeMillis();
-        String res;
+        String res = "";
         try {
-            JsonNode jsonNodeTree = new ObjectMapper().readTree(jsonString);
-            res = new ObjectMapper().writeValueAsString(jsonNodeTree);
+            Gson gson = new Gson();
+            Map[] map = gson.fromJson(jsonString, Map[].class);
+            String str = gson.toJson(map);
+            //System.out.println(str);
+
+            Yaml yaml = new Yaml();
+
+            JSONObject jsonobject = new JSONObject(map);
+            String prettyJSONString = jsonobject.toString(4);
+            Map<String, Object> map1 = yaml.load(prettyJSONString);
+            res = yaml.dump(map);
+
+            //System.out.println();
+
         } catch (Exception e) {
+            e.printStackTrace();
             return "File can not be converted";
         }
         Thread.sleep(1000);
@@ -67,18 +79,27 @@ public class RunParser {
     private static String asJson(String yaml) throws InterruptedException {
         long start = System.currentTimeMillis();
         Yaml yaml1 = new Yaml();
-        JSONObject jsonObject;
+        StringBuilder jsonObject = new StringBuilder();
         try {
-            Map<String, Object> map = yaml1.load(yaml);
-            jsonObject = new JSONObject(map);
+            ArrayList list = yaml1.load(yaml);
+            for (int i = 0; i < list.size(); i++) {
+                String str = new Gson().toJson(list.get(i), Map.class);
+                Map<String, Object> map = yaml1.load(str);
+                if (i == list.size() - 1) {
+                    jsonObject.append(new JSONObject(map));
+                } else {
+                    jsonObject.append(new JSONObject(map)).append(",");
+                }
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return "File can not be converted";
         }
 
         Thread.sleep(1000);
         long finish = System.currentTimeMillis();
         resAsJson = finish - start;
-        return jsonObject.toString();
+        return "[" + jsonObject + "]";
     }
 
     private static void writeToFile(String fileName, String info) throws IOException {
@@ -112,12 +133,12 @@ public class RunParser {
         File file = new File(pathDir + File.separator.concat("result.log"));
         file.createNewFile();
         if (oldFile.getName().endsWith(".json")) {
-            info = oldFile.getName() + " -> " + newFileName + "; " + resAsYaml + "ms; " + oldFile.length() + " -> " + newFile.length();
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsYaml + "ms; " + oldFile.length() + " -> " + newFile.length() + "\n";
         }
         if (oldFile.getName().endsWith(".yaml")) {
-            info = oldFile.getName() + " -> " + newFileName + "; " + resAsJson + "ms; " + oldFile.length() + " -> " + newFile.length();
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsJson + "ms; " + oldFile.length() + " -> " + newFile.length() + "\n";
         }
-        Files.write(Path.of(file.getPath()), info.getBytes());
+        Files.write(Path.of(file.getPath()), info.getBytes(), StandardOpenOption.APPEND);
     }
 
 }

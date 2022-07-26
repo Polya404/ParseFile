@@ -1,0 +1,15 @@
+MOCK_DATA (1).json -> MOCK_DATA (1).yaml; 1368ms; 153164 -> 146390
+MOCK_DATA.json -> MOCK_DATA.yaml; 1067ms; 135387 -> 129387
+userClass.yaml -> userClass.json; 1021ms; 112 -> 115
+MOCK_DATA (1).json -> MOCK_DATA (1).yaml; 1060ms; 153164 -> 146390
+MOCK_DATA.json -> MOCK_DATA.yaml; 1045ms; 135387 -> 129387
+userClass.yaml -> userClass.json; 1008ms; 112 -> 115
+MOCK_DATA (1).yaml -> MOCK_DATA (1).json; 1576ms; 146390 -> 152165
+MOCK_DATA.yaml -> MOCK_DATA.json; 1147ms; 129387 -> 134388
+userClass.json -> userClass.yaml; 1031ms; 115 -> 111
+MOCK_DATA (1).json -> MOCK_DATA (1).yaml; 1120ms; 153164 -> 146390
+MOCK_DATA.json -> MOCK_DATA.yaml; 1049ms; 135387 -> 129387
+userClass.yaml -> userClass.json; 1002ms; 112 -> 115
+MOCK_DATA (1).json -> MOCK_DATA (1).yaml; 1049ms; 153164 -> 146390
+MOCK_DATA.json -> MOCK_DATA.yaml; 1051ms; 135387 -> 129387
+userClass.yaml -> userClass.json; 1007ms; 112 -> 115
