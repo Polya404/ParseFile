@@ -5,9 +5,7 @@ import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,9 +42,7 @@ public class RunParser {
                 writeToFile(file.getName(), asJson(yaml));
                 writeLog(file);
             }
-            //System.out.println(file.getName());
         } else {
-            //System.out.println(file.getName());
             for (File f : Objects.requireNonNull(file.listFiles())) {
                 getFileStructure(f);
             }
