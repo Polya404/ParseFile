@@ -63,9 +63,9 @@ public class RunParser {
 
     private static void writeToFile(String fileName, String info) throws IOException {
         Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
-        System.out.println(pathDir);
         String dirName = "converted";
         File dir = new File(String.valueOf(pathDir));
+        fileName = fileName.replaceAll(".yaml", ".json");
         File file = new File(dir+File.separator.concat(dirName), fileName);
         file.createNewFile();
         Files.write(Path.of(file.getPath()),info.getBytes());
