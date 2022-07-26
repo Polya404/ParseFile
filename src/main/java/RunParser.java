@@ -13,7 +13,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RunParser {
-    public static void main(String[] args) throws IOException {
+    static long resAsJson;
+    static long resAsYaml;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         File file;
         if (args.length == 0) {
             Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
@@ -26,7 +29,7 @@ public class RunParser {
         getFileStructure(file);
     }
 
-    private static void getFileStructure(File file) throws IOException {
+    private static void getFileStructure(File file) throws IOException, InterruptedException {
         if (file.isFile()) {
             if (file.getName().endsWith(".json")) {
                 String json = ReadFromFile.readToString(file.getPath());
@@ -37,6 +40,7 @@ public class RunParser {
                 String yaml = ReadFromFile.readToString(file.getPath());
                 System.out.println(asJson(yaml));
                 writeToFile(file.getName(), asJson(yaml));
+                writeLog(file);
             }
             //System.out.println(file.getName());
         } else {
@@ -47,16 +51,24 @@ public class RunParser {
         }
     }
 
-    private static String asYaml(String jsonString) throws JsonProcessingException {
+    private static String asYaml(String jsonString) throws JsonProcessingException, InterruptedException {
+        long start = System.currentTimeMillis();
         JsonNode jsonNodeTree = new ObjectMapper().readTree(jsonString);
         String res = new ObjectMapper().writeValueAsString(jsonNodeTree);
+        Thread.sleep(1000);
+        long finish = System.currentTimeMillis();
+        resAsYaml = finish - start;
         return res;
     }
 
-    private static String asJson(String yaml) {
+    private static String asJson(String yaml) throws InterruptedException {
+        long start = System.currentTimeMillis();
         Yaml yaml1 = new Yaml();
         Map<String, Object> map = yaml1.load(yaml);
         JSONObject jsonObject = new JSONObject(map);
+        Thread.sleep(1000);
+        long finish = System.currentTimeMillis();
+        resAsJson = finish - start;
         return jsonObject.toString();
     }
 
@@ -64,10 +76,38 @@ public class RunParser {
         Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
         String dirName = "converted";
         File dir = new File(String.valueOf(pathDir));
-        fileName = fileName.replaceAll(".yaml", ".json");
-        File file = new File(dir+File.separator.concat(dirName), fileName);
+        if (fileName.endsWith(".yaml")) {
+            fileName = fileName.replaceAll(".yaml", ".json");
+        }
+        if (fileName.endsWith(".json")) {
+            fileName = fileName.replaceAll(".json", ".yaml");
+        }
+        File file = new File(dir + File.separator.concat(dirName), fileName);
         file.createNewFile();
-        Files.write(Path.of(file.getPath()),info.getBytes());
+        Files.write(Path.of(file.getPath()), info.getBytes());
+    }
+
+    private static void writeLog(File oldFile) throws IOException {
+        String info = "";
+        String newFileName = "";
+        Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
+        if (oldFile.getName().endsWith(".yaml")) {
+            newFileName = oldFile.getName().replaceAll(".yaml", ".json");
+        }
+        if (oldFile.getName().endsWith(".json")) {
+            newFileName = oldFile.getName().replaceAll(".yaml", ".json");
+        }
+        Path currentDir = Path.of(pathDir + File.separator.concat("converted") + File.separator.concat(newFileName));
+
+        File file = new File(pathDir + File.separator.concat("result.log"));
+        file.createNewFile();
+        if (oldFile.getName().endsWith(".json")) {
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsYaml + "ms; ";
+        }
+        if (oldFile.getName().endsWith(".yaml")) {
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsJson + "ms; ";
+        }
+        Files.write(Path.of(file.getPath()), info.getBytes());
     }
 
 }
