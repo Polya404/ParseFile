@@ -5,7 +5,9 @@ import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -78,8 +80,7 @@ public class RunParser {
         File dir = new File(String.valueOf(pathDir));
         if (fileName.endsWith(".yaml")) {
             fileName = fileName.replaceAll(".yaml", ".json");
-        }
-        if (fileName.endsWith(".json")) {
+        } else if (fileName.endsWith(".json")) {
             fileName = fileName.replaceAll(".json", ".yaml");
         }
         File file = new File(dir + File.separator.concat(dirName), fileName);
@@ -95,17 +96,19 @@ public class RunParser {
             newFileName = oldFile.getName().replaceAll(".yaml", ".json");
         }
         if (oldFile.getName().endsWith(".json")) {
-            newFileName = oldFile.getName().replaceAll(".yaml", ".json");
+            newFileName = oldFile.getName().replaceAll(".json", ".yaml");
         }
         Path currentDir = Path.of(pathDir + File.separator.concat("converted") + File.separator.concat(newFileName));
+        System.out.println(currentDir);
+        File newFile = new File(String.valueOf(currentDir));
 
         File file = new File(pathDir + File.separator.concat("result.log"));
         file.createNewFile();
         if (oldFile.getName().endsWith(".json")) {
-            info = oldFile.getName() + " -> " + newFileName + "; " + resAsYaml + "ms; ";
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsYaml + "ms; " + oldFile.length() + " -> " + newFile.length();
         }
         if (oldFile.getName().endsWith(".yaml")) {
-            info = oldFile.getName() + " -> " + newFileName + "; " + resAsJson + "ms; ";
+            info = oldFile.getName() + " -> " + newFileName + "; " + resAsJson + "ms; " + oldFile.length() + " -> " + newFile.length();
         }
         Files.write(Path.of(file.getPath()), info.getBytes());
     }
