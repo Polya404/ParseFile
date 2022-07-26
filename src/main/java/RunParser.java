@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
@@ -10,13 +9,11 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.sql.Time;
 import java.util.Map;
 import java.util.Objects;
 
 public class RunParser {
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws IOException {
         File file;
         if (args.length == 0) {
             Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
@@ -29,7 +26,7 @@ public class RunParser {
         getFileStructure(file);
     }
 
-    private static void getFileStructure(File file) throws JsonProcessingException {
+    private static void getFileStructure(File file) throws IOException {
         if (file.isFile()) {
             if (file.getName().endsWith(".json")) {
                 String json = ReadFromFile.readToString(file.getPath());
@@ -64,27 +61,14 @@ public class RunParser {
         return jsonObject.toString();
     }
 
-    // метод записи в файл в папку конвертед
-//    public void writeFile() throws IOException {
-//        Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
-//        String filename = "gameStatistic.log";
-//        String s = pathDir.toAbsolutePath().toString();
-//        File file = new File(s, File.separator.concat(filename));
-//
-//        if (file.exists()) {
-//            for (String str : info) {
-//                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
-//            }
-//        } else {
-//            file.createNewFile();
-//            for (String str : info) {
-//                Files.write(Path.of(s + File.separator.concat(filename)), str.getBytes(), StandardOpenOption.APPEND);
-//            }
-//        }
-//    }
-    private static void writeToFile(String fileName, String s){
+    private static void writeToFile(String fileName, String info) throws IOException {
         Path pathDir = FileSystems.getDefault().getPath("").toAbsolutePath();
         System.out.println(pathDir);
+        String dirName = "converted";
+        File dir = new File(String.valueOf(pathDir));
+        File file = new File(dir+File.separator.concat(dirName), fileName);
+        file.createNewFile();
+        Files.write(Path.of(file.getPath()),info.getBytes());
     }
 
 }
