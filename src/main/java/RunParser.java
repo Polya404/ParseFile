@@ -31,13 +31,12 @@ public class RunParser {
             if (file.getName().endsWith(".json")) {
                 String json = ReadFromFile.readToString(file.getPath());
                 //System.out.println(asYaml(json));
-                // записіваем в файл.yaml в папку конвертед
+                //writeToFile(file.getName(), asYaml(json));
             }
             if (file.getName().endsWith(".yaml")) {
                 String yaml = ReadFromFile.readToString(file.getPath());
                 System.out.println(asJson(yaml));
                 writeToFile(file.getName(), asJson(yaml));
-                // записываем файл.json в папку конвертед
             }
             //System.out.println(file.getName());
         } else {
